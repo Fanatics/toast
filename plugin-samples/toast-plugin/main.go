@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/nilslice/toast/collector"
-	"github.com/nilslice/toast/plugin"
+	"github.com/Fanatics/toast/collector"
+	"github.com/Fanatics/toast/plugin"
 )
 
 func main() {
