@@ -16,6 +16,16 @@ $ toast --input . \
     --plugin "amdm_gen_proto --option1 value1 -o v2:out=./api/proto"
 ```
 
+## Installation
+
+If you have Go installed, run:
+```sh
+$ go get github.com/Fanatics/toast/...
+```
+
+Once the project is at a more stable point, pre-built binaries will be made 
+available for download across common platforms.
+
 ## Status
 `toast` is still under heavy development. Tests are still being written, APIs 
 will change without notice. However, feel free to give it a spin, open issues and submit PRs. 
