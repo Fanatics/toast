@@ -16,6 +16,8 @@ $ toast --input . \
     --plugin "amdm_gen_proto --option1 value1 -o v2:out=./api/proto"
 ```
 
+> See a basic [**example plugin**](https://github.com/Fanatics/toast/blob/master/plugin-samples/toast-plugin/main.go) written in Go.
+
 ## Installation
 
 If you have Go installed, run:
