@@ -9,13 +9,13 @@ import (
 	"strings"
 )
 
-type Plugin struct {
+type plugin struct {
 	cmd       *exec.Cmd
 	outputDir string
 }
 
 type runner struct {
-	p    *Plugin
+	p    *plugin
 	data io.Reader
 }
 
@@ -24,9 +24,9 @@ const (
 	pluginErrPrefix = "[toast:plugin]"
 )
 
-var pluginList []Plugin
+var pluginList []plugin
 
-func (p *Plugin) String() string {
+func (p *plugin) String() string {
 	var all []string
 	for _, plug := range pluginList {
 		all = append(all, fmt.Sprintf(
@@ -38,7 +38,7 @@ func (p *Plugin) String() string {
 	return strings.Join(all, "\n")
 }
 
-func (p *Plugin) Set(value string) error {
+func (p *plugin) Set(value string) error {
 	pluginParts := strings.Split(value, ":")
 	if len(pluginParts) < 2 {
 		return fmt.Errorf("invalid plugin flag value: %s", value)
@@ -70,7 +70,7 @@ func (p *Plugin) Set(value string) error {
 	}
 	baseOutputDir := outputVals[1]
 
-	pluginList = append(pluginList, Plugin{
+	pluginList = append(pluginList, plugin{
 		cmd:       exec.Command(pluginCmd, pluginOptions...),
 		outputDir: baseOutputDir,
 	})
@@ -78,7 +78,7 @@ func (p *Plugin) Set(value string) error {
 	return nil
 }
 
-func (p *Plugin) each(fn func(idx int, plug *Plugin) error) error {
+func (p *plugin) each(fn func(idx int, plug *plugin) error) error {
 	errChan := make(chan error)
 	done := make(chan struct{})
 	var errs []string

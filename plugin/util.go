@@ -32,7 +32,7 @@ func GofmtReadWriter(rw io.ReadWriter) (io.ReadWriter, error) {
 
 // OutputTemplate executes a text template using the provided data and writes it
 // to the destination io.Writer.
-func (p *plugin) OutputTemplate(dst io.Writer, templatePath string, data interface{}) error {
+func (p *Plugin) OutputTemplate(dst io.Writer, templatePath string, data interface{}) error {
 	return template.Must(
 		template.New(path.Base(templatePath)).ParseFiles(templatePath),
 	).Execute(dst, data)
@@ -40,7 +40,7 @@ func (p *plugin) OutputTemplate(dst io.Writer, templatePath string, data interfa
 
 // OutputTemplateHTML executes an HTML template using the provided data and
 // writes it to the destination io.Writer.
-func (p *plugin) OutputTemplateHTML(dst io.Writer, templatePath string, data interface{}) error {
+func (p *Plugin) OutputTemplateHTML(dst io.Writer, templatePath string, data interface{}) error {
 	return htmltmpl.Must(
 		htmltmpl.New(path.Base(templatePath)).ParseFiles(templatePath),
 	).Execute(dst, data)

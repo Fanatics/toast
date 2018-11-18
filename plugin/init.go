@@ -14,20 +14,20 @@ import (
 // pointer to collector.Data.
 type Func func(d *collector.Data) error
 
-type plugin struct {
+type Plugin struct {
 	name string
 }
 
-// New returns a plugin instance for a plugin to be initialized.
-func New(name string) *plugin {
-	return &plugin{
+// New returns a Plugin instance for a Plugin to be initialized.
+func New(name string) *Plugin {
+	return &Plugin{
 		name: name,
 	}
 }
 
-// Init is called by plugin code and is provided a PluginFunc from the caller
+// Init is called by Plugin code and is provided a PluginFunc from the caller
 // to handle the input Data (read from stdin).
-func (p *plugin) Init(fn Func) {
+func (p *Plugin) Init(fn Func) {
 	// read from stdin to get serialized bytes
 	input := &bytes.Buffer{}
 	_, err := io.Copy(input, os.Stdin)
@@ -44,12 +44,12 @@ func (p *plugin) Init(fn Func) {
 		return
 	}
 
-	// execute "fn" and pass it the *collector.Data, where the plugin would use
+	// execute "fn" and pass it the *collector.Data, where the Plugin would use
 	// the simplified AST to generate other code.
 	p.wrapErrAndLog(fn(inputData))
 }
 
-func (p *plugin) wrapErrAndLog(err error) {
+func (p *Plugin) wrapErrAndLog(err error) {
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "[toast:plugin] %s: %v\n", p.name, err)
 	}
