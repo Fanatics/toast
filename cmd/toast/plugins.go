@@ -9,13 +9,13 @@ import (
 	"strings"
 )
 
-type plugin struct {
+type Plugin struct {
 	cmd       *exec.Cmd
 	outputDir string
 }
 
 type runner struct {
-	p    *plugin
+	p    *Plugin
 	data io.Reader
 }
 
@@ -24,9 +24,9 @@ const (
 	pluginErrPrefix = "[toast:plugin]"
 )
 
-var pluginList []plugin
+var pluginList []Plugin
 
-func (p *plugin) String() string {
+func (p *Plugin) String() string {
 	var all []string
 	for _, plug := range pluginList {
 		all = append(all, fmt.Sprintf(
@@ -38,9 +38,7 @@ func (p *plugin) String() string {
 	return strings.Join(all, "\n")
 }
 
-func (p *plugin) Set(value string) error {
-	// --plugin="amdm_gen_db subcmd -flag1 val --flag2=val2:out=./internal/db"
-	//                                                     ^
+func (p *Plugin) Set(value string) error {
 	pluginParts := strings.Split(value, ":")
 	if len(pluginParts) < 2 {
 		return fmt.Errorf("invalid plugin flag value: %s", value)
@@ -72,7 +70,7 @@ func (p *plugin) Set(value string) error {
 	}
 	baseOutputDir := outputVals[1]
 
-	pluginList = append(pluginList, plugin{
+	pluginList = append(pluginList, Plugin{
 		cmd:       exec.Command(pluginCmd, pluginOptions...),
 		outputDir: baseOutputDir,
 	})
@@ -80,7 +78,7 @@ func (p *plugin) Set(value string) error {
 	return nil
 }
 
-func (p *plugin) each(fn func(idx int, plug *plugin) error) error {
+func (p *Plugin) each(fn func(idx int, plug *Plugin) error) error {
 	errChan := make(chan error)
 	done := make(chan struct{})
 	var errs []string
