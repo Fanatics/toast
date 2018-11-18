@@ -18,7 +18,7 @@ import (
 
 const toastPrefix = "[toast]"
 
-var plugins *Plugin
+var plugins *plugin
 
 func main() {
 	input := flag.String("input", ".", "input directory from where to parse Go code")
@@ -91,7 +91,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = plugins.each(func(i int, p *Plugin) error {
+	err = plugins.each(func(i int, p *plugin) error {
 		// replace the output base value for each plugin rather than decoding,
 		// re-assigning the value, and re-encoding
 		b, err := sjson.SetBytes(b, "output_base", []byte(p.outputDir))
