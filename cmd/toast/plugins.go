@@ -39,8 +39,6 @@ func (p *plugin) String() string {
 }
 
 func (p *plugin) Set(value string) error {
-	// --plugin="amdm_gen_db subcmd -flag1 val --flag2=val2:out=./internal/db"
-	//                                                     ^
 	pluginParts := strings.Split(value, ":")
 	if len(pluginParts) < 2 {
 		return fmt.Errorf("invalid plugin flag value: %s", value)
