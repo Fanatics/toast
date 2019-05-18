@@ -62,6 +62,7 @@ func main() {
 					Structs:          c.Structs,
 					TypeDefs:         c.TypeDefs,
 					Interfaces:       c.Interfaces,
+					Funcs:            c.Funcs,
 				}
 				p.Files = append(p.Files, f)
 			}
